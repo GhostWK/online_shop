@@ -24,6 +24,11 @@ public class EntityGoods {
     public EntityGoods() {
     }
 
+    public EntityGoods add(EntityKeyWord kw){
+        keyWords.add(kw);
+        return this;
+    }
+
     public EntityGoods(String name, Integer quantity, Double price) {
         this.name = name;
         this.quantity = quantity;

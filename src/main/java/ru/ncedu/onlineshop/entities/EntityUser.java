@@ -5,16 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class EntityUser {
+public class EntityUser implements Serializable{
 
     @Id
     @GeneratedValue
     private Long id;
-    @Size(max = 20, min = 4)
-//    @JsonProperty(value = "name")
+//    @Size(max = 20, min = 4)
     private String login;
     @JsonIgnore
     private String hashPassword;
@@ -58,6 +58,14 @@ public class EntityUser {
 
     public void setContact(List<EntityContact> contact) {
         this.contact = contact;
+    }
+
+    public EntityCart getCart() {
+        return cart;
+    }
+
+    public void setCart(EntityCart cart) {
+        this.cart = cart;
     }
 
     @Override

@@ -1,9 +1,12 @@
 package ru.ncedu.onlineshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,9 +17,14 @@ public class EntityKeyWord {
 
     private String k;
     private String v;
-
     @ManyToMany
     private Set<EntityGoods> goods;
+
+    public EntityKeyWord add(EntityGoods x){
+        if(goods == null) goods = new HashSet<>();
+        goods.add(x);
+        return this;
+    }
 
     public EntityKeyWord(String k, String v) {
         this.k = k;

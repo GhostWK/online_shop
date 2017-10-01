@@ -16,7 +16,6 @@ public class EntityContact {
 
     private String phone;
     private String address;
-
     @ManyToOne
     private EntityUser user;
 

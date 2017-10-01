@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/onlineShop/users")
 public class UserRestController {
     @Autowired
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
 
 
 //
@@ -30,9 +30,9 @@ public class UserRestController {
 //        return opt.get();
 //    }
 
-    @RequestMapping(method = RequestMethod.POST )
-    ResponseEntity<EntityUser> registration(@RequestBody WrapperUser user){
-        if(userRepository.findByLogin(user.getLogin())==null){
+    @RequestMapping(method = RequestMethod.POST)
+    ResponseEntity<EntityUser> registration(@RequestBody WrapperUser user) {
+        if (userRepository.findByLogin(user.getLogin()) == null) {
             //TODO: same login is already exists
             return null;
         }
@@ -45,8 +45,15 @@ public class UserRestController {
         return new ResponseEntity<EntityUser>(regUser, HttpStatus.CREATED);
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    Iterable<EntityUser> get() {
+        return userRepository.findAll();
+    }
 
-
+    @RequestMapping(method = RequestMethod.GET, value ="/{id}")
+    ResponseEntity<EntityUser> get(@PathVariable Long id){
+        return new ResponseEntity<EntityUser>(userRepository.findOne(id), HttpStatus.OK);
+    }
 
 
 }

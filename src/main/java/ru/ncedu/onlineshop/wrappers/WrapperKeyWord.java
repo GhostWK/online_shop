@@ -1,10 +1,14 @@
 package ru.ncedu.onlineshop.wrappers;
 
+import java.util.Set;
+
 public class WrapperKeyWord {
 
     private Long id;
     private String k;
     private String v;
+
+    private Set<WrapperGoods> set;
 
     public WrapperKeyWord() {
     }
@@ -37,5 +41,13 @@ public class WrapperKeyWord {
 
     public void setV(String v) {
         this.v = v;
+    }
+
+    public Set<WrapperGoods> getSet() {
+        return set;
+    }
+
+    public void setSet(Set<WrapperGoods> set) {
+        this.set = set;
     }
 }

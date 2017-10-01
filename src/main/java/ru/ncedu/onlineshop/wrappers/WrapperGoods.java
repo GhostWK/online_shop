@@ -5,6 +5,12 @@ public class WrapperGoods {
     private Integer quantity;
     private Double price;
 
+    public WrapperGoods(String name, Integer quantity, Double price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
     public String getName() {
         return name;
     }
