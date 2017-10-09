@@ -5,7 +5,7 @@ import ru.ncedu.onlineshop.entities.EntityUser;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<EntityUser, Long> {
+public interface RepositoryUser extends JpaRepository<EntityUser, Long> {
 
     Optional<EntityUser> findByLogin(String login);
 

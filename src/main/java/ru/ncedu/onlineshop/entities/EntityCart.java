@@ -15,6 +15,7 @@ public class EntityCart implements Serializable{
     @OneToOne(mappedBy = "cart")
     private EntityUser user;
 
+    @JsonIgnore
     @OneToMany
     private Set<EntityChosenGoods> chosenGoods;
 

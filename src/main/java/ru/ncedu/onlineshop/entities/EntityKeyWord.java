@@ -17,6 +17,7 @@ public class EntityKeyWord {
 
     private String k;
     private String v;
+    @JsonIgnore
     @ManyToMany
     private Set<EntityGoods> goods;
 
@@ -64,5 +65,10 @@ public class EntityKeyWord {
 
     public void setGoods(Set<EntityGoods> goods) {
         this.goods = goods;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("{\"id\":%s, \"k\":\"%s\", \"v\":\"%s\"}", id, k, v);
     }
 }

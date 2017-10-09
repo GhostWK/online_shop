@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface GoodsRepository extends /*JpaRepository<EntityGoods, Long>*/ PagingAndSortingRepository<EntityGoods, Long> {
+public interface RepositoryGoods extends /*JpaRepository<EntityGoods, Long>*/ PagingAndSortingRepository<EntityGoods, Long> {
 
     Optional<EntityGoods> getByName(String name);
     Optional<EntityGoods> getById(Long id);

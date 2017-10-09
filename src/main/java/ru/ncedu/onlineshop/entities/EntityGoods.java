@@ -1,5 +1,6 @@
 package ru.ncedu.onlineshop.entities;
 
+
 import ru.ncedu.onlineshop.wrappers.WrapperGoods;
 
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ public class EntityGoods {
     private String name;
     private Integer quantity;
     private Double price;
+
 
     @ManyToMany
     private Set<EntityKeyWord> keyWords;
