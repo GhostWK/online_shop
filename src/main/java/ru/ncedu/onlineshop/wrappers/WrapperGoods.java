@@ -11,6 +11,9 @@ public class WrapperGoods {
         this.price = price;
     }
 
+    public WrapperGoods() {
+    }
+
     public String getName() {
         return name;
     }

@@ -40,4 +40,9 @@ public class RestControllerCart {
         return serviceCart.createCart(cart);
     }
 
+    @RequestMapping(method = RequestMethod.PATCH, value = "/{id}")
+    ResponseEntity<EntityCart> pushCart(@PathVariable Long id){
+        return serviceCart.push(id);
+    }
+
 }

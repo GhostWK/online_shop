@@ -14,6 +14,10 @@ import ru.ncedu.onlineshop.repositories.RepositoryUser;
 import ru.ncedu.onlineshop.wrappers.WrapperCart;
 import ru.ncedu.onlineshop.wrappers.WrapperChosenGoods;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 @Component
 public class ServiceCart {
 
@@ -48,13 +52,57 @@ public class ServiceCart {
 
     public ResponseEntity<EntityUser> createCart( WrapperCart cart){
 
-        Long userId = cart.getUserId();
-        EntityUser user = repositoryUser.findOne(userId);
+        EntityUser user = repositoryUser.findOne(cart.getUserId());
         EntityCart newCart = repositoryCart.save(new EntityCart());
+
         user.setCart(newCart);
         repositoryCart.saveAndFlush(newCart);
         user = repositoryUser.saveAndFlush(user);
+        newCart.setUser(user);
+        repositoryCart.saveAndFlush(newCart);
+
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+
+    public ResponseEntity<EntityCart> push(Long cartId){
+        EntityCart entityCart = repositoryCart.findOne(cartId);
+        if(entityCart == null){
+            return new ResponseEntity<EntityCart>(HttpStatus.NOT_FOUND);
+        }
+        if(!checkPresenceAllGoods(entityCart)){
+            //There no enough goods on store
+            return new ResponseEntity<EntityCart>(HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<EntityCart>(issueCart(entityCart), HttpStatus.OK);
+    }
+
+    private boolean checkPresenceAllGoods(EntityCart cart){
+        Set<EntityChosenGoods> chosenGoodsSet = cart.getChosenGoods();
+        for(EntityChosenGoods x : chosenGoodsSet){
+            if(x.getAmount() > x.getGoods().getQuantity()) return false;
+        }
+        return true;
+    }
+
+    private EntityCart issueCart(EntityCart cart){
+        Set<EntityChosenGoods> chosenGoodsSet = cart.getChosenGoods();
+        for(EntityChosenGoods x : chosenGoodsSet){
+            Integer quantity = x.getGoods().getQuantity() - x.getAmount();
+            x.getGoods().setQuantity(quantity);
+            repositoryGoods.save(x.getGoods());
+        }
+
+        EntityUser user = cart.getUser();
+        cart.setStatus("ISSUED:"+user.getLogin());
+        user.setCart(null);
+
+        repositoryUser.saveAndFlush(user);
+        repositoryCart.saveAndFlush(cart);
+        return cart;
+    }
+
+
 }

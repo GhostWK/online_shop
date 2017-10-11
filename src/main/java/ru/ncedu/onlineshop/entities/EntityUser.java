@@ -9,12 +9,12 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class EntityUser implements Serializable{
+public class EntityUser implements Serializable {
 
     @Id
     @GeneratedValue
     private Long id;
-//    @Size(max = 20, min = 4)
+
     private String login;
     @JsonIgnore
     private String hashPassword;
@@ -27,6 +27,32 @@ public class EntityUser implements Serializable{
 
     public EntityUser() {
     }
+
+    public static UserBuilder init() {
+        return new EntityUser().new UserBuilder();
+    }
+
+    public class UserBuilder {
+        public UserBuilder id(Long id) {
+            EntityUser.this.id = id;
+            return this;
+        }
+
+        public UserBuilder login(String login) {
+            EntityUser.this.login = login;
+            return this;
+        }
+
+        public UserBuilder password(String password) {
+            EntityUser.this.hashPassword = password;
+            return this;
+        }
+
+        public EntityUser createUser() {
+            return EntityUser.this;
+        }
+    }
+
 
     public Long getId() {
         return id;

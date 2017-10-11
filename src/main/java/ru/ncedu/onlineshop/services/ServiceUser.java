@@ -4,20 +4,24 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.ncedu.onlineshop.entities.EntityUser;
 import ru.ncedu.onlineshop.repositories.RepositoryUser;
 import ru.ncedu.onlineshop.wrappers.WrapperUser;
 
-@Controller
+@Component
 public class ServiceUser {
-    @Autowired
+
     private RepositoryUser repositoryUser;
 
+    @Autowired
+    public ServiceUser(RepositoryUser repositoryUser) {
+        this.repositoryUser = repositoryUser;
+    }
 
-
-    public ResponseEntity<EntityUser> registration( WrapperUser user) {
+    public ResponseEntity<EntityUser> registration(WrapperUser user) {
 
         if (repositoryUser.findByLogin(user.getLogin()).isPresent()) {
             return new ResponseEntity<EntityUser>(HttpStatus.ALREADY_REPORTED);
