@@ -25,6 +25,11 @@ public class EntityUser implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<EntityContact> contact;
 
+    public EntityUser(String login, String hashPassword) {
+        this.login = login;
+        this.hashPassword = hashPassword;
+    }
+
     public EntityUser() {
     }
 

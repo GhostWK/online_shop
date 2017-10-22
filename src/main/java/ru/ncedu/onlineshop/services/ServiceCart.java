@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import ru.ncedu.onlineshop.email.EmailPatterns;
+import ru.ncedu.onlineshop.email.EmailSender;
+import ru.ncedu.onlineshop.email.SendEmail;
 import ru.ncedu.onlineshop.entities.EntityCart;
 import ru.ncedu.onlineshop.entities.EntityChosenGoods;
 import ru.ncedu.onlineshop.entities.EntityUser;
@@ -101,7 +104,15 @@ public class ServiceCart {
 
         repositoryUser.saveAndFlush(user);
         repositoryCart.saveAndFlush(cart);
+
+        sendEmail(cart);
+
         return cart;
+    }
+
+    private void sendEmail(EntityCart cart){
+        EmailSender sender = new EmailSender(cart.getUser().getLogin(), "Order "+cart.getId(), EmailPatterns.getTableFromCart(cart));
+        sender.start();
     }
 
 
